@@ -23,7 +23,7 @@ public class EstudanteService {
     }
 
     public void deletarAluno(Long id){
-        estudanteRepository.deleteAllById(id);
+        estudanteRepository.deleteById(id);
     }
 
 }
