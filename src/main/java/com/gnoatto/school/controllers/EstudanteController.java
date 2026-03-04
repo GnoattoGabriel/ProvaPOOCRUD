@@ -29,4 +29,17 @@ public class EstudanteController {
     public void deletarEstudante(@PathVariable Long id){
         estudanteService.deletarAluno(id);
     }
+
+    @GetMapping
+    public EstudanteModel buscarPorId(@PathVariable Long id){
+        return estudanteService.buscarPorID(id);
+    }
+
+    @PostMapping
+    public EstudanteModel atualizar(@PathVariable Long id,@RequestBody EstudanteModel estudanteModel){
+        EstudanteModel model = estudanteService.buscarPorID(id);
+        model.setNome(estudanteModel.getNome());
+
+        return estudanteService.criarEstudante(estudanteModel);
+    }
 }
