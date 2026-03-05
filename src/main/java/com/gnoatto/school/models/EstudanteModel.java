@@ -1,6 +1,7 @@
 package com.gnoatto.school.models;
 
 
+import com.gnoatto.school.enums.EstudanteEnum;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,6 +18,8 @@ public class EstudanteModel {
     @Column(name = "email")
     private String email;
     private Integer idade;
+
+    private EstudanteEnum estudanteEnum;
 
     public EstudanteModel(){
 
