@@ -19,16 +19,16 @@ public class EstudanteService {
         return estudanteRepository.save(estudanteModel);
     }
 
-    public List<EstudanteModel> findAll(){
+    public List<EstudanteModel> findAll() {
         return estudanteRepository.findAll();
     }
 
-    public void deletarAluno(Long id){
+    public void deletarAluno(Long id) {
         estudanteRepository.deleteById(id);
     }
 
-    public EstudanteModel buscarPorID(Long id){
-        return estudanteRepository.findById(id).get();
+    public Optional<EstudanteModel> buscarPorID(Long id) {
+        return estudanteRepository.findById(id);
     }
 
     public EstudanteModel atualizar(Long id, EstudanteModel estudanteModel){

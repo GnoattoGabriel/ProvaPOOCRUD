@@ -56,4 +56,12 @@ public class EstudanteModel {
     public void setIdade(Integer idade) {
         this.idade = idade;
     }
+
+    public EstudanteEnum getEstudanteEnum() {
+        return estudanteEnum;
+    }
+
+    public void setEstudanteEnum(EstudanteEnum estudanteEnum) {
+        this.estudanteEnum = estudanteEnum;
+    }
 }
