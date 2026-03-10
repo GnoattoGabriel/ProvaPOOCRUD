@@ -4,6 +4,7 @@ package com.gnoatto.school.controllers;
 import com.gnoatto.school.models.EstudanteModel;
 import com.gnoatto.school.services.EstudanteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +18,9 @@ public class EstudanteController {
     private EstudanteService estudanteService;
 
     @PostMapping
-    public EstudanteModel criarAluno(@RequestBody EstudanteModel estudanteModel){
-        return estudanteService.criarEstudante(estudanteModel);
+    public ResponseEntity<EstudanteModel> criarAluno(@RequestBody EstudanteModel estudanteModel){
+        EstudanteModel novo = estudanteService.criarEstudante(estudanteModel);
+        return ResponseEntity.status(201).body(novo);
     }
 
     @GetMapping
@@ -27,19 +29,26 @@ public class EstudanteController {
     }
 
     @DeleteMapping("/{id}")
-    public void deletarEstudante(@PathVariable Long id){
+    public ResponseEntity<Void> deletarEstudante(@PathVariable Long id){
         estudanteService.deletarAluno(id);
+        return ResponseEntity.noContent().build();
     }
 
-    @GetMapping
-    public Optional<EstudanteModel> buscarPorId(@PathVariable Long id){
-        return estudanteService.buscarPorID(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<EstudanteModel> buscarPorId(@PathVariable Long id){
+        Optional<EstudanteModel> estudante = estudanteService.buscarPorID(id);
+
+        if(estudante.isPresent()){
+            return ResponseEntity.ok(estudante.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
-    @PostMapping
+    @PutMapping("/{id}")
     public EstudanteModel atualizar(@PathVariable Long id,@RequestBody EstudanteModel estudanteModel){
-        Optional<EstudanteModel> model = estudanteService.buscarPorID(id);
-
-        return estudanteService.criarEstudante(estudanteModel);
+        estudanteModel.setId(id);
+        return estudanteService.atualizar(id, estudanteModel);
     }
 }
