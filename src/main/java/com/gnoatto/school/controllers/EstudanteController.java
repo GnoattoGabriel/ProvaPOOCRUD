@@ -6,7 +6,9 @@ import com.gnoatto.school.services.EstudanteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +22,11 @@ public class EstudanteController {
     @PostMapping
     public ResponseEntity<EstudanteModel> criarAluno(@RequestBody EstudanteModel estudanteModel){
         EstudanteModel novo = estudanteService.criarEstudante(estudanteModel);
-        return ResponseEntity.status(201).body(novo);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(estudanteModel.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(novo);
     }
 
     @GetMapping
